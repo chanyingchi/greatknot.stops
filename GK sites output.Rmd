@@ -1,0 +1,100 @@
+---
+title: "Where do Great Knots stop during migration?"
+
+output: html_document
+---
+
+![](https://raw.githubusercontent.com/chanyingchi/greatknot.stops/master/GK-sat-tag.jpg){width=320px}
+
+In 2015-2017, the migration of great knots were tracked by satellite transmitters. 
+
+These are the 92 sites that these great knots have stopped. 
+
+Many of them (63%) were not known as important site for migratory shorebirds.
+
+Find out more in the [article in the Journal of Applied Ecology.](https://doi.org/10.1111/1365-2664.13474)
+
+```{r include=FALSE}
+setwd('C:/Users/chan/work/Company/visualisation/GK stopping sites')
+
+library(leaflet)
+library(leafem)
+library(magrittr)
+library(readxl)
+d.gksite<-read_excel('GK.sites.xlsx')
+
+# colour for knowledge status:
+# color blind friendly palette (with grey):
+cbf_1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73", 
+           "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+pal<-c("#D55E00",'#1C86EE','#000080')
+
+d.gksite$circle.color[d.gksite$knowledge=='UN']<-pal[1]
+d.gksite$circle.color[d.gksite$knowledge=='CO']<-pal[2]
+d.gksite$circle.color[d.gksite$knowledge=='GK']<-pal[3]
+
+#label
+label<-c('Unknown site','Known site for migratory shorebirds','Known site for Great Knot')
+#layer control 
+control.icon<-c(paste("<img src='https://raw.githubusercontent.com/chanyingchi/greatknot.stops/master/legend-icon/red.jpg' height='18' width='16'>",label[1]),
+                paste("<img src='https://raw.githubusercontent.com/chanyingchi/greatknot.stops/master/legend-icon/light%20blue.jpg' height='18' width='16'>",label[2]),
+                paste("<img src='https://raw.githubusercontent.com/chanyingchi/greatknot.stops/master/legend-icon/dark%20blue.jpg' height='18' width='16'>",label[3]))
+
+d.gksite$knowledge.status<-NA
+d.gksite$knowledge.status[d.gksite$knowledge=='UN']<-control.icon[1]
+d.gksite$knowledge.status[d.gksite$knowledge=='CO']<-control.icon[2]
+d.gksite$knowledge.status[d.gksite$knowledge=='GK']<-control.icon[3]
+
+d<-d.gksite
+
+# size
+d$circle.size<-3.5+(log(d$Northward+d$Southward))/0.8
+
+#popup
+d$popup<-NA
+d$popup= paste("<b>",d$site.name,'</b>',"<br>",
+                       d$Region,"<br>",
+                       d$Territory,"<br>",
+               "<i>",d$knowledge.status,"</i>")
+
+#create map
+m<- leaflet(d) %>% 
+  addProviderTiles(providers$Esri.WorldTopoMap, group="Esri World Topo map") %>% 
+  addTiles(group ="Open Street Map" ) %>%
+  addMiniMap() %>%
+addCircles(radius = ~circle.size*5000, color = ~circle.color, 
+                 fillOpacity=0.5, fill = ~circle.color, stroke=F,
+                 popup=~popup, group=~knowledge.status)%>%
+  addCircleMarkers(radius = ~circle.size, color = ~circle.color, 
+                   fillOpacity=0.5, fill = ~circle.color, stroke=F,
+                   popup=~popup, group=~knowledge.status)%>%
+  # Layers control
+  addLayersControl(
+    baseGroups = c("Esri World Topo map", "Open Street Map"),
+    overlayGroups = control.icon,
+    options = layersControlOptions(collapsed = FALSE)) 
+  # add logo
+  m<-addLogo(m,"https://raw.githubusercontent.com/chanyingchi/greatknot.stops/master/Logo_gor_Ginny_with_Godwit_in_Asia_gray_scale-01.png",
+          alpha = 1, src = c("remote"), url='https://knotwits.wordpress.com',
+          position = c("bottomleft"),
+          offset.x = 15, offset.y = 40, width = 80, height = 80)
+
+
+
+```
+
+
+```{r echo=FALSE, fig.height = 8}
+m
+```
+
+---
+
+Interactive map created by YC Chan.
+
+[Data:  Chan et al. (2019) Filling knowledge gaps in a threatened shorebird flyway through satellite tracking. Journal of Applied Ecology.](https://doi.org/10.1111/1365-2664.13474)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
