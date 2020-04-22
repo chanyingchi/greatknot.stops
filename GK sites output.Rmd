@@ -3,7 +3,13 @@ title: "Where do Great Knots stop during migration?"
 
 output: html_document
 ---
-
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+ 
+---
 ![](https://raw.githubusercontent.com/chanyingchi/greatknot.stops/master/GK-sat-tag.jpg){width=320px}
 
 In 2015-2017, the migration of great knots were tracked by satellite transmitters. 
