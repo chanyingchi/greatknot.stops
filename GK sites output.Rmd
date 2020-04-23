@@ -12,11 +12,14 @@ knit: (function(input_file, encoding) {
 ---
 ![](https://raw.githubusercontent.com/chanyingchi/greatknot.stops/master/GK-sat-tag.jpg){width=320px}
 
-In 2015-2017, the migration of great knots were tracked by satellite transmitters. 
+Great Knots (_Calidris tenuirostris_) are small migratory shorebirds in the East Asian-Australasian Flyway that fly each year between breeding grounds in the East Russian Arctic and nonbreeding grounds in Australia. They are also [endangered](https://www.iucnredlist.org/species/22693359/155482913). One major threat is the habitat destruction and degradation in their stopping areas during their migration.
 
-These are the 92 sites that these great knots have stopped. 
+In 2015-2017, a team of scientists from the University of Groningen, NIOZ Netherlands Institute for Sea Research and US Geological Survey, brought together by the [Global Flyway Network](https://www.globalflywaynetwork.org/), tracked Great Knots year-long with satellite transmitters. This is the first time that the entire migration journey is tracked.
 
-Many of them (63%) were not known as important site for migratory shorebirds.
+Here are the 92 sites where these great knots stopped. 
+
+Prior to this study, many of these sites (63%) were not known as important for migratory shorebirds. 
+The study has highlighted regions potentially	important	for	shorebirds but lack	ecological information and conservation	recognition, such	as those in	Southern China and Southeast Asia.
 
 Find out more in the [article in the Journal of Applied Ecology.](https://doi.org/10.1111/1365-2664.13474)
 
@@ -90,7 +93,7 @@ addCircles(radius = ~circle.size*5000, color = ~circle.color,
 ```
 
 
-```{r echo=FALSE, fig.height = 8}
+```{r echo=FALSE, fig.height = 7}
 m
 ```
 
