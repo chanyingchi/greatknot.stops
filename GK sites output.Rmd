@@ -65,6 +65,9 @@ d$popup= paste("<b>",d$site.name,'</b>',"<br>",
                        d$Region,"<br>",
                        d$Territory,"<br>",
                "<i>",d$knowledge.status,"</i>")
+d$popup[d$Territory=='Taiwan']<-paste("<b>",d$site.name[d$Territory=='Taiwan'],'</b>',"<br>",
+                       d$Region[d$Territory=='Taiwan'],"<br>",
+                       "<i>",d$knowledge.status[d$Territory=='Taiwan'],"</i>")
 
 #create map
 m<- leaflet(d) %>% 
